@@ -1,0 +1,21 @@
+{% extends 'base-main.html' %}
+
+{% block content %}
+    <h1>{% block title %} Github Issue Browser {% endblock %}</h1>
+
+    
+    {% for title1, number, status in titles %}
+        <a href="{{ url_for('issue', iss_id=number) }}">
+            <h2>{{ title1, number, status }}</h2>
+        </a>
+        <hr>
+    {% endfor %}
+
+
+<div class="pagination">
+  {% for num in page_nums %}
+      <a href="{{ url_for('index_numbered', page_number=num) }}">{{num}}</a>
+  {% endfor %}
+</div>
+
+{% endblock %}
