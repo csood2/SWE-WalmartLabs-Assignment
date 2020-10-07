@@ -12,10 +12,6 @@ URL = "https://api.github.com/repos/walmartlabs/thorax/issues"
 r = requests.get(url = URL)
 data = r.json()
 
-#Comments - if api limit is exceeded, use local file for demo
-# with open('temp.json') as f:
-#     data = json.load(f)
-
 #main store of the data from GET request
 datb = pd.DataFrame(data)
 
