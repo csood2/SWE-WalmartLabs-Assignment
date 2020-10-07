@@ -4,19 +4,19 @@ import numpy as np
 
 
 
-# URL = "https://api.github.com/repos/walmartlabs/thorax/issues"
-#
-# #sending get request and saving the response as response object
-# r = requests.get(url = URL)
-#
-# #extracting data in json format
-# data = r.json()
+URL = "https://api.github.com/repos/walmartlabs/thorax/issues"
+
+#sending get request and saving the response as response object
+r = requests.get(url = URL)
+
+#extracting data in json format
+data = r.json()
 
 
 import json
 
-with open('temp.json') as f:
-    data = json.load(f)
+# with open('temp.json') as f:
+#     data = json.load(f)
 datb = pd.DataFrame(data)
 
 
@@ -27,23 +27,6 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-    page = 1
-    # URL = "https://api.github.com/repos/walmartlabs/thorax/issues"
-    #
-    # # sending get request and saving the response as response object
-    # r = requests.get(url = URL)
-    #
-    # # extracting data in json format
-    # data = r.json()
-
-    #db = pd.DataFrame(data)
-
-    #mainpage = df[['title', 'number', 'state']]
-
-#conn = get_db_connection()
-#    //posts = conn.execute('SELECT * FROM posts').fetchall()
-#    //conn.close()
-
 
     rows = datb.shape[0]
     page_arr = page_num_array(rows)
@@ -99,11 +82,20 @@ def issue(iss_id):
     vals = vals.transpose()
     vals2 = vals[:,0]
 
+    user_json = result_issue["user"]
+    user_json = user_json.values[0]
+    user_json
+    user_dict = pd.DataFrame.from_dict(user_json, orient="index")
+    user_dict.index.name = 'key'
+    user_dict.reset_index(inplace=True)
+    user_dict_arr = user_dict.values
     result_df = pd.DataFrame({'keys':col_list, 'values':vals2})
+    result_df = result_df[result_df['keys'] != "user"] 
+    issue_title_val = result_df.loc[result_df['keys'] == 'title'].values[0][1]
 
 
 
-    return render_template('issue.html', data = result_df.values)
+    return render_template('issue.html', data = result_df.values, issue_num = iss_id,  issue_title = issue_title_val, user = user_dict_arr)
 
 
 
