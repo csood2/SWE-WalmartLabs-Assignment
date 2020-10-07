@@ -2,71 +2,62 @@
 
 {% block content %}
 
-<br>
-<br>
-    <h2>{% block title %} {{ issue_title }} {% endblock %}</h2>
-    <h4 style="color:grey;">#{{ issue_num }} </h4>
-    <a>
-      <span class="badge badge-pill badge-success"><h5>&nbsp {{status}}&nbsp</h5></span>
-      </a
-    <br>
-    <br>
-    <br>
+  <br><br>
+
+  <!-- Basic onformation about this issue - title, status, number -->
+  <h2>{% block title %} {{ issue_title }} {% endblock %}</h2>
+  <h4 style="color:grey;">#{{ issue_num }} </h4>
+  <a>
+    <span class="badge badge-pill badge-success"><h5>&nbsp {{status}}&nbsp</h5></span>
+  </a
+  <br><br><br>
+
+  <!-- div for the label-description table in each issue -->
+  <div class="container">
+
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th style="width: 20%"><h3>Label</h3></th>
+          <th style="width: 80%"><h3>Description</h3></th>
+        </tr>
+      </thead>
+      <tbody>
+
+        {% for title, text in data %}
+        <tr>
+            <td><b>
+              {{title}}
+            </b></td>
+            <td>{{text}}</td>
+        </tr>
+        {% endfor %}
+
+      </tbody>
+    </table>
+  </div>
 
 
-    <div class="container">
+  <!-- div for the user information table in each issue -->
+  <div class="container">
+    <br>
+    <h3>{% block usertitle %} User Information: {% endblock %}</h3>
+      <!--  user information table -->
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th style="width: 20%">Attribute</th>
+          <th style="width: 80%">Details</th>
+        </tr>
+      </thead>
+      <tbody>
 
-      <table class="table table-striped">
-        <thead>
+        {% for title, text in user %}
           <tr>
-            <th style="width: 20%"><h3>Label</h3></th>
-            <th style="width: 80%"><h3>Description</h3></th>
+            <td>{{title}}</td>
+            <td>{{text}}</td>
           </tr>
-        </thead>
-        <tbody>
-
-
-
-            {% for title, text in data %}
-            <tr>
-                    <td><b>
-                      {{title}}
-                    </b></td>
-                    <td>{{text}}</td>
-                    </td>
-                </tr>
-            {% endfor %}
-
-        </tbody>
-      </table>
-    </div>
-
-
-
-    <div class="container">
-      <br>
-      <h3>{% block usertitle %} User Information: {% endblock %}</h3>
-
-      <table class="table table-striped">
-        <thead>
-          <tr>
-            <th style="width: 20%">Attribute</th>
-            <th style="width: 80%">Details</th>
-          </tr>
-        </thead>
-        <tbody>
-
-
-
-            {% for title, text in user %}
-            <tr>
-                    <td>
-                      {{title}}
-                    </td>
-                    <td>{{text}}</td>
-                    </td>
-                </tr>
-            {% endfor %}
+        {% endfor %}
 
         </tbody>
       </table>

@@ -1,52 +1,45 @@
 {% extends 'main.html' %}
 
 {% block content %}
-    <h1>{% block title %} Current Issues in {{repo}}: {% endblock %}</h1>
+  <h1>{% block title %} Current Issues in {{repo}}: {% endblock %}</h1>
 
 
-<div class="container">
-  <br>
+  <div class="container">
+    <br>
 
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        <th style="width: 80%"><h4>Description</h4></th>
-        <th style="width: 20%"><h4><center>Status</h4></th>
-      </tr>
-    </thead>
-    <tbody>
-
-
-
-        {% for title1, number, status in titles %}
+    <table class="table table-striped">
+      <thead>
         <tr>
-                <td><h4><a href="{{ url_for('issue', iss_id=number) }}">
-                  {{title1}}
-                  </h4>
-                  </a>
-                  <h7 style="color:grey;">#{{number}}</h7>
-                </td>
-
-                <td><center><a href="{{ url_for('issue', iss_id=number) }}">
-                <span class="badge badge-pill badge-success">&nbsp {{status}}&nbsp</span>
-                  </a></td>
-            </tr>
+          <th style="width: 80%"><h4>Description</h4></th>
+          <th style="width: 20%"><h4><center>Status</h4></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for title1, number, status in titles %}
+          <tr>
+            <td>
+              <h4><a href="{{ url_for('issue', iss_id=number) }}">{{title1}}</a></h4>
+              <h7 style="color:grey;">#{{number}}</h7>
+            </td>
+            <td>
+              <center>
+                <a href="{{ url_for('issue', iss_id=number) }}"> <span class="badge badge-pill badge-success">&nbsp {{status}}&nbsp</span></a>
+            </td>
+          </tr>
         {% endfor %}
 
-    </tbody>
-  </table>
-</div>
+      </tbody>
+    </table>
+  </div>
 
-
-<div class="pagination">
-  {% for num in page_nums %}
-  {% if num == curr_pg %}
-     <a href="{{ url_for('index_numbered', page_number=num) }}"><b>{{num}}</b></a>
-  {% else %}
-  <a href="{{ url_for('index_numbered', page_number=num) }}">{{num}}</a>
-{% endif %}
-
-  {% endfor %}
-</div>
-
+<!-- implementation of pagination feature. Each number contains links to that specific page number. -->
+  <div class="pagination">
+    {% for num in page_nums %}
+      {% if num == curr_pg %}
+        <a href="{{ url_for('index_numbered', page_number=num) }}"><b>{{num}}</b></a>
+      {% else %}
+        <a href="{{ url_for('index_numbered', page_number=num) }}">{{num}}</a>
+      {% endif %}
+    {% endfor %}
+  </div>
 {% endblock %}
