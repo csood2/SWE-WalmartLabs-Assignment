@@ -1,5 +1,6 @@
 import requests
 import pandas as pd
+import numpy as np
 
 
 
@@ -76,9 +77,6 @@ def index_numbered(page_number):
     return render_template('index.html', titles = titles_df.values, page_nums = page_arr)
 
 
-#, numbers = db["number"]
-
-
 def get_issue(number, datb):
     result_issue = datb.loc[datb['number'] == number]
     if result_issue is None:
@@ -91,15 +89,21 @@ def get_issue(number, datb):
 @app.route('/issue/<int:iss_id>')
 def issue(iss_id):
 
-    print("got here!")
 
     result_issue = get_issue(iss_id, datb)
     if result_issue is None:
         abort(404)
 
-    print("values:")
-    print(result_issue.values)
-    return render_template('issue.html', issue=result_issue.values)
+    col_list = np.array((datb.columns))
+    vals = np.array(result_issue)
+    vals = vals.transpose()
+    vals2 = vals[:,0]
+
+    result_df = pd.DataFrame({'keys':col_list, 'values':vals2})
+
+
+
+    return render_template('issue.html', data = result_df.values)
 
 
 
