@@ -1,15 +1,7 @@
 {% extends 'main.html' %}
 
 {% block content %}
-    <h1>{% block title %} Current Issues: {% endblock %}</h1>
-
-
-    {% for title1, number, status in titles %}
-        <!-- <a href="{{ url_for('issue', iss_id=number) }}">
-            <h2>{{ title1, number, status }}</h2>
-        </a>
-        <hr> -->
-    {% endfor %}
+    <h1>{% block title %} Current Issues in {{repo}}: {% endblock %}</h1>
 
 
 <div class="container">
@@ -18,9 +10,8 @@
   <table class="table table-striped">
     <thead>
       <tr>
-        <th style="width: 70%"><h4>Title</h4></th>
-        <th style="width:20%"><h4>Issue Number</h4></th>
-        <th style="width: 10%"><h4>Status</h4></th>
+        <th style="width: 80%"><h4>Description</h4></th>
+        <th style="width: 20%"><h4><center>Status</h4></th>
       </tr>
     </thead>
     <tbody>
@@ -29,16 +20,15 @@
 
         {% for title1, number, status in titles %}
         <tr>
-                <td><a href="{{ url_for('issue', iss_id=number) }}">
+                <td><h4><a href="{{ url_for('issue', iss_id=number) }}">
                   {{title1}}
-                  </a></td>
-
-                <td>
-                  {{number}}
+                  </h4>
+                  </a>
+                  <h7 style="color:grey;">#{{number}}</h7>
                 </td>
 
-                <td><a href="{{ url_for('issue', iss_id=number) }}">
-                  <span class="badge badge-primary">{{ status}}</span>
+                <td><center><a href="{{ url_for('issue', iss_id=number) }}">
+                <span class="badge badge-pill badge-success">&nbsp {{status}}&nbsp</span>
                   </a></td>
             </tr>
         {% endfor %}
@@ -50,7 +40,12 @@
 
 <div class="pagination">
   {% for num in page_nums %}
-      <a href="{{ url_for('index_numbered', page_number=num) }}">{{num}}</a>
+  {% if num == curr_pg %}
+     <a href="{{ url_for('index_numbered', page_number=num) }}"><b>{{num}}</b></a>
+  {% else %}
+  <a href="{{ url_for('index_numbered', page_number=num) }}">{{num}}</a>
+{% endif %}
+
   {% endfor %}
 </div>
 

@@ -1,9 +1,17 @@
 {% extends 'main.html' %}
 
 {% block content %}
-    <h2>{% block title %} Issue {{ issue_num }}: {{ issue_title }} {% endblock %}</h2>
-    <h4>{{ "placeholder" }}</h4>
-    <br?
+
+<br>
+<br>
+    <h2>{% block title %} {{ issue_title }} {% endblock %}</h2>
+    <h4 style="color:grey;">#{{ issue_num }} </h4>
+    <a>
+      <span class="badge badge-pill badge-success"><h5>&nbsp {{status}}&nbsp</h5></span>
+      </a
+    <br>
+    <br>
+    <br>
 
 
     <div class="container">
@@ -11,8 +19,8 @@
       <table class="table table-striped">
         <thead>
           <tr>
-            <th style="width: 20%">Title</th>
-            <th style="width: 80%">Information</th>
+            <th style="width: 20%"><h3>Label</h3></th>
+            <th style="width: 80%"><h3>Description</h3></th>
           </tr>
         </thead>
         <tbody>
@@ -36,7 +44,8 @@
 
 
     <div class="container">
-      <h2>{% block usertitle %} User Information: {% endblock %}</h2>
+      <br>
+      <h3>{% block usertitle %} User Information: {% endblock %}</h3>
 
       <table class="table table-striped">
         <thead>

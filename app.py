@@ -33,8 +33,9 @@ def index():
 
     titles_df = datb[['title', 'number', 'state']][0:10]
     start_end = [0, 10];
+    repo_data = "walmart/thorax"
 
-    return render_template('index.html', titles = titles_df.values, page_nums = page_arr)
+    return render_template('index.html', titles = titles_df.values, curr_pg = currpage, page_nums = page_arr, repo = repo_data)
 
 
 @app.route('/<int:page_number>')
@@ -54,10 +55,12 @@ def index_numbered(page_number):
 
     start_end = paginator(page_number, datb);
 
-    titles_df = datb[['title', 'number', 'state']]
     titles_df = datb[['title', 'number', 'state']][start_end[0]:start_end[1]]
+    repo_data = "walmart/thorax"
+    currpage = page_number
 
-    return render_template('index.html', titles = titles_df.values, page_nums = page_arr)
+
+    return render_template('index.html', titles = titles_df.values, curr_pg = currpage, page_nums = page_arr, repo = repo_data)
 
 
 def get_issue(number, datb):
@@ -90,12 +93,13 @@ def issue(iss_id):
     user_dict.reset_index(inplace=True)
     user_dict_arr = user_dict.values
     result_df = pd.DataFrame({'keys':col_list, 'values':vals2})
-    result_df = result_df[result_df['keys'] != "user"] 
+    result_df = result_df[result_df['keys'] != "user"]
     issue_title_val = result_df.loc[result_df['keys'] == 'title'].values[0][1]
+    issue_status_val = result_df.loc[result_df['keys'] == 'state'].values[0][1]
 
 
 
-    return render_template('issue.html', data = result_df.values, issue_num = iss_id,  issue_title = issue_title_val, user = user_dict_arr)
+    return render_template('issue.html', data = result_df.values, issue_num = iss_id,  issue_title = issue_title_val, user = user_dict_arr, status = issue_status_val)
 
 
 
