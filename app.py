@@ -83,19 +83,21 @@ def get_issue(number, datb):
     result_issue = datb.loc[datb['number'] == number]
     if result_issue is None:
         abort(404)
+    print("goat here!")
     return result_issue
 
 
 
-@app.route('/<int:iss_id>')
+@app.route('/issue/<int:iss_id>')
 def issue(iss_id):
 
+    print("got here!")
 
     result_issue = get_issue(iss_id, datb)
     if result_issue is None:
         abort(404)
 
-        print("values:")
+    print("values:")
     print(result_issue.values)
     return render_template('issue.html', issue=result_issue.values)
 

@@ -1,15 +1,47 @@
-{% extends 'base-main.html' %}
+{% extends 'main.html' %}
 
 {% block content %}
     <h1>{% block title %} Github Issue Browser {% endblock %}</h1>
 
-    
+
     {% for title1, number, status in titles %}
-        <a href="{{ url_for('issue', iss_id=number) }}">
+        <!-- <a href="{{ url_for('issue', iss_id=number) }}">
             <h2>{{ title1, number, status }}</h2>
         </a>
-        <hr>
+        <hr> -->
     {% endfor %}
+
+
+<div class="container">
+
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th style="width: 70%">Title</th>
+        <th style="width: 10%">Issue Number</th>
+        <th style="width: 10%">Status</th>
+      </tr>
+    </thead>
+    <tbody>
+
+
+
+        {% for title1, number, status in titles %}
+        <tr>
+                <td>
+                  <a href="{{ url_for('issue', iss_id=number) }}">
+                  {{title1}}
+                  </a>
+                </td>
+                <td>{{number}}</td>
+                <td><span class="badge badge-primary">{{ status}}</span>
+                </td>
+            </tr>
+        {% endfor %}
+
+    </tbody>
+  </table>
+</div>
 
 
 <div class="pagination">
